@@ -1,4 +1,12 @@
-/.venv
-.idea
-
+# data files
 contacts.json
+
+# virtual environments
+/.*venv
+
+# IDE files
+.idea
+.vscode
+
+# cache
+__pycache__
