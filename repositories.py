@@ -10,6 +10,11 @@ class ContactRepository(ABC):
     async def get_all(self) -> list[Contact]:
         """Retrieve all contacts."""
         raise NotImplementedError
+
+    @abstractmethod
+    async def get_by_id(self, contact_id: int) -> Contact | None:
+        """Retrieve a contact by its ID."""
+        raise NotImplementedError
     
     @abstractmethod
     async def save(self, contacts: list[Contact]) -> None:
