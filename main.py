@@ -27,6 +27,12 @@ def load_contacts() -> list[Contact]:
     return []
 
 
+def save_contacts(contacts: list[Contact]) -> None:
+    """Save contacts to JSON file."""
+    with open(CONTACTS_FILE, "w") as f:
+        json.dump([contact.model_dump() for contact in contacts], f, indent=2)
+
+
 @app.get("/")
 async def root() -> dict[str, str]:
     return {"message": "Contact Management API is running"}
@@ -41,3 +47,12 @@ async def health_check() -> dict[str, str]:
 async def list_contacts() -> list[Contact]:
     """List all contacts."""
     return load_contacts()
+
+
+@app.post("/contacts", response_model=Contact, status_code=201)
+async def create_contact(contact: Contact) -> Contact:
+    """Add a new contact."""
+    contacts = load_contacts()
+    contacts.append(contact)
+    save_contacts(contacts)
+    return contact
