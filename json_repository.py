@@ -82,3 +82,15 @@ class JsonRepository:
             contacts.append(contact)
             await repository.save(contacts)
             return contact
+
+        @app.put(
+                "/contacts/{contact_id}",
+                status_code=204
+        )
+        async def update_contact(
+                contact_id: int,
+                contact: models.Contact
+        ) -> None:
+            contacts = await repository.get_all()
+            contacts[contact_id - 1] = contact
+            await repository.save(contacts)
