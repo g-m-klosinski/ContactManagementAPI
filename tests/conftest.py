@@ -32,10 +32,9 @@ def client(temp_contacts_file: pathlib.Path):
 
 
 @pytest.fixture
-def sample_contact() -> dict[str, int | str]:
+def sample_contact() -> dict[str, str]:
     """Provide a sample contact for testing."""
     return {
-        "id": 1,
         "name": "Alice Brown",
         "phone": "555-0104",
         "email": "alice@example.com",
@@ -43,23 +42,20 @@ def sample_contact() -> dict[str, int | str]:
 
 
 @pytest.fixture
-def sample_contacts() -> list[dict[str, int | str]]:
+def sample_contacts() -> list[dict[str, str]]:
     """Provide multiple sample contacts for testing."""
     return [
         {
-            "id": 1,
             "name": "John Doe",
             "phone": "555-0101",
             "email": "john@example.com",
         },
         {
-            "id": 2,
             "name": "Jane Smith",
             "phone": "555-0102",
             "email": "jane@example.com",
         },
         {
-            "id": 3,
             "name": "Bob Johnson",
             "phone": "555-0103",
             "email": "bob@example.com",
@@ -71,7 +67,7 @@ def sample_contacts() -> list[dict[str, int | str]]:
 def populated_client(
     client: TestClient,
     temp_contacts_file: pathlib.Path,
-    sample_contacts: list[dict[str, int | str]],
+    sample_contacts: list[dict[str, str]],
 ) -> TestClient:
     """Provide a test client with pre-populated contacts."""
     with open(temp_contacts_file, "w") as f:
