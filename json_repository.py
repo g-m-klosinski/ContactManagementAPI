@@ -94,3 +94,15 @@ class JsonRepository:
             contacts = await repository.get_all()
             contacts[contact_id - 1] = contact
             await repository.save(contacts)
+
+        @app.delete("/contacts/{contact_id}", status_code=204)
+        async def delete_contact(contact_id: int) -> None:
+            contacts = await repository.get_all()
+            
+            try:
+                del contacts[contact_id - 1]
+            except IndexError:
+                raise HTTPException(status_code=404, detail="Contact not found")
+
+            await repository.save(contacts)
+            
