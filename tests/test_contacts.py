@@ -36,3 +36,14 @@ def test_update_contact(populated_client: fastapi.testclient.TestClient, sample_
 
     assert response.status_code == 204
     assert updated_contact == sample_contact
+
+
+def test_delete_contact(populated_client: fastapi.testclient.TestClient):
+    response: httpx2.Response = populated_client.delete("/contacts/1")
+
+    get_response: httpx2.Response = populated_client.get("/contacts")
+
+    data: list[dict[str, str]] = get_response.json()
+
+    assert response.status_code == 204
+    assert len(data) == 2
