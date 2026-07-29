@@ -31,4 +31,8 @@ def test_create_contact(client: fastapi.testclient.TestClient, sample_contact: m
 def test_update_contact(populated_client: fastapi.testclient.TestClient, sample_contact: models.Contact):
     response: httpx2.Response = populated_client.put("/contacts/1", json=sample_contact)
 
+    get_response: httpx2.Response = populated_client.get("/contacts/1")
+    updated_contact: models.Contact = get_response.json()
+
     assert response.status_code == 204
+    assert updated_contact == sample_contact
